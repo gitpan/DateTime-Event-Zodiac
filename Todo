@@ -1,0 +1,6 @@
+TODO list for Perl module Text::Phonetic
+
+- Fix failing tests in Text::Phonetic::Phonix
+- Add Phonet/Phonem algorithm
+
+
