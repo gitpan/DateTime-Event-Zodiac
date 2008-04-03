@@ -1,9 +1,9 @@
 --- #YAML:1.0
-name:  DateTime-Event-Zodiac
-abstract: Return zodiac for a given date
-version: 1.00
+name: DateTime-Event-Zodiac
+version: 1.01
 author:
-  - Maroš Kollár <maros [at] k-1.com>
+  - Maroš Kollár <maros[at]k-1.com>
+abstract: Return zodiac for a given date
 license:             perl
 distribution_type:   module
 requires:
@@ -25,4 +25,4 @@ meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
 resources:
   license: http://dev.perl.org/licenses/
-
+generated_by: ExtUtils::ModuleMaker 0.49

@@ -15,5 +15,6 @@ WriteMakefile(
                      'Test::Pod::Coverage' => 0,
                      'DateTime' => 0,
                      'DateTime::Util::Astro' => 0,
+                     'Exporter::Lite' => 0,
                     },
 );
