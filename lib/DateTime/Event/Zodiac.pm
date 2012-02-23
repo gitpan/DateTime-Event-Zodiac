@@ -5,101 +5,92 @@ use strict;
 use warnings;
 use utf8;
 
-use Exporter::Lite;
+use Exporter;
+use base qw(Exporter);
+
 use DateTime;
 use DateTime::Util::Astro::Sun qw(solar_longitude);
 
-use vars qw($VERSION @EXPORT @EXPORT_OK @ZODIAC);
-$VERSION = '1.01';
-@EXPORT = qw();
-@EXPORT_OK = qw(zodiac_date_name zodiac_date_symbol zodiac_astro_name zodiac_astro_symbol zodiac_date zodiac_astro);
+our $VERSION = '1.02';
+our @EXPORT = qw();
+our @EXPORT_OK = qw(zodiac_date_name zodiac_date_symbol zodiac_astro_name zodiac_astro_symbol zodiac_date zodiac_astro);
 
-@ZODIAC = (
+our @ZODIAC = (
     {
         name    => 'aries',
-        symbol  => '♈',
-        #symbol  => "\x{2648}",
+        symbol  => "\x{2648}",
         start   => '21.03',
         end     => '20.04',
     },
     {
         name    => 'taurus',
-        symbol  => '♉',
-        #symbol  => "\x{2649}",
+        symbol  => "\x{2649}",
         start   => '21.04',
         end     => '20.05',
     },
     {
         name    => 'gemini',
-        symbol  => '♊',
-        #symbol  => "\x{264a}",
+        symbol  => "\x{264a}",
         start   => '21.05',
         end     => '21.06',
     },
     {
         name    => 'cancer',
-        symbol  => '♋',
-        #symbol  => "\x{264b}",
+        symbol  => "\x{264b}",
         start   => '22.06',
         end     => '22.07',
     },
     {
         name    => 'leo',
-        symbol  => '♌',
-        #symbol  => "\x{264c}",
+        symbol  => "\x{264c}",
         start   => '23.07',
         end     => '23.08',
     },
     {
         name    => 'virgo',
-        symbol  => '♍',
-        #symbol  => "\x{264d}",
+        symbol  => "\x{264d}",
         start   => '24.08',
         end     => '22.09',
     },
     {
         name    => 'libra',
-        symbol  => '♎',
-        #symbol  => "\x{264e}",
+        symbol  => "\x{264e}",
         start   => '23.09',
         end     => '22.10',
     },
     {
         name    => 'scorpius',
-        symbol  => '♏',
-        #symbol  => "\x{264f}",
+        symbol  => "\x{264f}",
         start   => '23.10',
         end     => '21.11',
     },
     {
         name    => 'sagittarius',
-        symbol  => '♐',
-        #symbol  => "\x{2650}",
+        symbol  => "\x{2650}",
         start   => '22.11',
         end     => '21.12',
     },
     {
         name    => 'capricornus',
-        symbol  => '♑',
-        #symbol  => "\x{2651}",
+        symbol  => "\x{2651}",
         start   => '22.12',
         end     => '19.01',
     },
     {
         name    => 'aquarius',
-        symbol  => '♒',
-        #symbol  => "\x{2652}",
+        symbol  => "\x{2652}",
         start   => '20.01',
         end     => '18.02',
     },
     {
         name    => 'pisces',
-        symbol  => '♓',
-        #symbol  => "\x{2653}",
+        symbol  => "\x{2653}",
         start   => '19.02',
         end     => '20.03',
     },
 );
+
+=encoding utf8
 
 =pod
 
@@ -112,9 +103,9 @@ DateTime::Event::Zodiac - Return zodiac for a given date
   use DateTime::Event::Zodiac qw(zodiac_date_name zodiac_date_symbol zodiac_astro_name zodiac_astro_symbol);
   
   my $dt = DateTime->new( 
-       year   => 1979,
-       month  => 3,
-       day    => 27,
+    year   => 1979,
+    month  => 3,
+    day    => 27,
   );
 
   print zodiac_date_name($dt);
@@ -127,7 +118,7 @@ using the longitude/position of the sun.
 The module exports no symbols by default. All used functions must be requested
 in the use statement. 
 
-All methods return undef on failiure.
+All methods return undef on failure.
   
 =head1 DESCRIPTION
 
@@ -135,14 +126,17 @@ All methods return undef on failiure.
 
  $name = zodiac_date_name($dt);
  
-Latin zodiac name: aries, taurus, gemini, ...
+Latin zodiac name: aries, taurus, gemini, cancer, leo, virgo, libra, scorpius,
+sagittarius, capricornus, aquarius and pisces.
+
 Fixed dates.
 
 =head2 zodiac_date_symbol
 
  $symbol = zodiac_date_symbol($dt);
  
-Unicode zodiac symbol positions U+2648 to U+2653
+Unicode zodiac symbol positions U+2648 to U+2653.
+
 Fixed dates.
 
 =head2 zodiac_astro_name
@@ -150,13 +144,15 @@ Fixed dates.
  $name = zodiac_astro_name($dt);
  
 Latin zodiac name: aries, taurus, gemini, ...
+
 Calculated from the longitude/position of the sun. 
 
 =head2 zodiac_astro_symbol
 
  $symbol = zodiac_astro_symbol($dt);
  
-Unicode zodiac symbol positions U+2648 to U+2653
+Unicode zodiac symbol positions U+2648 to U+2653.
+
 Calculated from the longitude/position of the sun.
 
 =head2 zodiac_date
@@ -170,24 +166,25 @@ Used internally by C<zodiac_date_name> and C<zodiac_date_symbol>
 
 Computes the zodiac from the position of the sun and returns a hash with the 
 keys name, symbol, start and end. The keys start and end should be ignored
-since they are used for the C<zodiac_date> function.
+since they are only used for the C<zodiac_date> function.
 
 May differ from the results of C<zodiac_date> depending on the solar year
 (leap year ect). 
 
 See L<DateTime::Util::Astro::Sun> for notes on accuracy. If computed 
 accurately enough this module should be also able to get the correct zodiac
-for the exact time of birth.
+for the exact time of birth. Without having the L<Math::BigInt::GMP> module
+installed the observed accuracy is about ± 2 hours.
 
 Used internally by C<zodiac_astro_name> and C<zodiac_astro_symbol>
-  
+
 =cut
 
 # ----------------------------------------------------------------------------
 sub zodiac_date_name
 # ----------------------------------------------------------------------------
 {
-    my $datetime = shift;
+    my ($datetime) = @_;
     my $zodiac = zodiac_date($datetime);
     return defined $zodiac ? $zodiac->{name}:undef;
 }
@@ -196,7 +193,7 @@ sub zodiac_date_name
 sub zodiac_date_symbol
 # ----------------------------------------------------------------------------
 {
-    my $datetime = shift;
+    my ($datetime) = @_;
     my $zodiac = zodiac_date($datetime);
     return defined $zodiac ? $zodiac->{symbol}:undef;
 }
@@ -205,7 +202,7 @@ sub zodiac_date_symbol
 sub zodiac_astro_name
 # ----------------------------------------------------------------------------
 {
-    my $datetime = shift;
+    my ($datetime) = @_;
     my $zodiac = zodiac_astro($datetime);
     return defined $zodiac ? $zodiac->{name}:undef;
 }
@@ -214,7 +211,7 @@ sub zodiac_astro_name
 sub zodiac_astro_symbol
 # ----------------------------------------------------------------------------
 {
-    my $datetime = shift;
+    my ($datetime) = @_;
     my $zodiac = zodiac_astro($datetime);
     return defined $zodiac ? $zodiac->{symbol}:undef;
 }
@@ -223,7 +220,7 @@ sub zodiac_astro_symbol
 sub zodiac_date
 # ----------------------------------------------------------------------------
 {
-    my $date = shift;
+    my ($date) = @_;
 
     die('Must specify a DateTime object') unless (defined $date 
         && ref($date)
@@ -231,8 +228,8 @@ sub zodiac_date
 
     # Loop all zodiacs
     foreach my $zodiac (@ZODIAC) {
-        my $start = _convertdate($zodiac->{start},$date->year);
-        my $end = _convertdate($zodiac->{end},$date->year);
+        my $start = _convertdate($zodiac->{start},$date->year,0,0);
+        my $end = _convertdate($zodiac->{end},$date->year,23,59);
         
         next unless defined $start && defined $end;
         
@@ -257,7 +254,7 @@ sub zodiac_date
 sub zodiac_astro
 # ----------------------------------------------------------------------------
 {
-    my $date = shift;
+    my ($date) = @_;
 
     die('Must specify a DateTime object') unless (defined $date 
         && ref($date)
@@ -276,20 +273,19 @@ sub zodiac_astro
 sub _convertdate
 # ----------------------------------------------------------------------------
 {
-    my $date = shift;
-    my $year = shift;
+    my ($date,$year,$hour,$minute) = @_;
     if ($date =~ m/^(\d\d)\.(\d\d)$/) {
         my $dt = DateTime->new(
             month  => $2,
             day    => $1,
             year   => $year,
+            hour   => $hour,
+            minute => $minute,
         );
         return $dt;
     }
     return undef;
 }
-
-1;
 
 =head1 DISCLAIMER  
 
@@ -300,26 +296,32 @@ I needed the money.
 =head1 TODO
 
 The C<zodiac_astro_horoscope> and C<zodiac_date_horoscope> functions have not 
-yet been implemented ;-)
+yet been implemented and probably never will be ;-)
 
 =head1 SUPPORT
 
 Please report any bugs or feature requests to 
 C<datetime-event-zodiac@rt.cpan.org>, or through the web interface at 
-L<http://rt.cpan.org>.  I will be notified, and then you'll automatically be 
-notified of progress on your bug as I make changes.
+L<http://rt.cpan.org/Public/Bug/Report.html?Queue=DateTime::Event::Zodiac>. 
+I will be notified, and then you'll automatically be notified of progress on 
+your report as I make changes.
 
 =head1 AUTHOR
 
     Maroš Kollár
     CPAN ID: MAROS
     maros [at] k-1.com
-    L<http://www.k-1.com>
+    L<http://www.revdev.at>
+
+=head1 ACKNOWLEDGEMENTS 
+
+This module was written for Revdev L<http://www.revdev.at>, a nice litte
+software company I run with Koki and Domm (L<http://search.cpan.org/~domm/>).
 
 =head1 COPYRIGHT
 
-DateTime::Event::Zodiac is Copyright (c) 2006,2007 Maroš. Kollár.
-All rights reserved.
+DateTime::Event::Zodiac is Copyright (c) 2008 Maroš Kollár
+- L<http://www.revdev.at>
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
@@ -328,3 +330,9 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
+
+q[I do not believe in this rubbish
+I do not believe in this rubbish
+I do not believe in this rubbish
+I do not believe in this rubbish
+I do not bel....];

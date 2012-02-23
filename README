@@ -87,8 +87,7 @@ AUTHOR
         L<http://www.k-1.com>
 
 COPYRIGHT
-    DateTime::Event::Zodiac is Copyright (c) 2006,2007 Maroš. Kollár. All
-    rights reserved.
+    DateTime::Event::Zodiac is Copyright (c) 2006,2007 Maroš Kollár.
 
     This program is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.

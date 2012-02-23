@@ -1,20 +1,19 @@
+# Load the Module::Install bundled in ./inc/
+use strict;
+use inc::Module::Install 0.92;
 
+# Define metadata
+name            'DateTime-Event-Zodiac';
+all_from        'lib/DateTime/Event/Zodiac.pm';
 
-use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
-WriteMakefile(
-    NAME         => 'DateTime::Event::Zodiac',
-    VERSION_FROM => 'lib/DateTime/Event/Zodiac.pm', # finds \$VERSION
-    AUTHOR       => 'Maros Kollar (maros [at] k-1.com)',
-    ABSTRACT     => 'Return zodiac for a given date',
-    NO_META      => 1,
-    PREREQ_PM    => {
-                     'Test::Pod' => 0,
-                     'Test::More' => 0,
-                     'Test::Pod::Coverage' => 0,
-                     'DateTime' => 0,
-                     'DateTime::Util::Astro' => 0,
-                     'Exporter::Lite' => 0,
-                    },
-);
+perl_version    '5.006';
+
+# Specific dependencies
+requires        'DateTime'              => 0;
+requires        'DateTime::Util::Astro' => 0;
+requires        'Exporter'              => 0;
+
+build_requires  'Test::More'            => 0;
+
+WriteAll;
+

@@ -1,6 +1,5 @@
-TODO list for Perl module Text::Phonetic
+TODO list for Perl module DateTime::Event::Zodiac
 
-- Fix failing tests in Text::Phonetic::Phonix
-- Add Phonet/Phonem algorithm
-
-
+* The "zodiac_astro_horoscope" and "zodiac_date_horoscope" functions have
+  not yet been implemented ;-)
+* Add localized values for zodiac names
