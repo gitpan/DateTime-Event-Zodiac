@@ -9,9 +9,9 @@ use Exporter;
 use base qw(Exporter);
 
 use DateTime;
-use DateTime::Util::Astro::Sun qw(solar_longitude);
+use DateTime::Astro qw(solar_longitude);
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 our @EXPORT = qw();
 our @EXPORT_OK = qw(zodiac_date_name zodiac_date_symbol zodiac_astro_name zodiac_astro_symbol zodiac_date zodiac_astro);
 
@@ -113,7 +113,7 @@ DateTime::Event::Zodiac - Return zodiac for a given date
   
 Returns the latin zodiac name or alternatively the unicode zodiac symbol
 for the given date. The zodiac may be calculated using either fixed dates or 
-using the longitude/position of the sun.
+using the exact longitude of the sun.
 
 The module exports no symbols by default. All used functions must be requested
 in the use statement. 
@@ -145,7 +145,7 @@ Fixed dates.
  
 Latin zodiac name: aries, taurus, gemini, ...
 
-Calculated from the longitude/position of the sun. 
+Calculated from the longitude of the sun. 
 
 =head2 zodiac_astro_symbol
 
@@ -153,11 +153,11 @@ Calculated from the longitude/position of the sun.
  
 Unicode zodiac symbol positions U+2648 to U+2653.
 
-Calculated from the longitude/position of the sun.
+Calculated from the longitude of the sun.
 
 =head2 zodiac_date
 
-Simply computes the zodiac from the date and returns a hash with the keys
+Simply computes the zodiac from the fixed date and returns a hash with the keys
 name, symbol, start and end.
 
 Used internally by C<zodiac_date_name> and C<zodiac_date_symbol>
@@ -171,10 +171,7 @@ since they are only used for the C<zodiac_date> function.
 May differ from the results of C<zodiac_date> depending on the solar year
 (leap year ect). 
 
-See L<DateTime::Util::Astro::Sun> for notes on accuracy. If computed 
-accurately enough this module should be also able to get the correct zodiac
-for the exact time of birth. Without having the L<Math::BigInt::GMP> module
-installed the observed accuracy is about ± 2 hours.
+See L<DateTime::Astro> for notes on accuracy.
 
 Used internally by C<zodiac_astro_name> and C<zodiac_astro_symbol>
 
@@ -311,17 +308,13 @@ your report as I make changes.
     Maroš Kollár
     CPAN ID: MAROS
     maros [at] k-1.com
-    L<http://www.revdev.at>
-
-=head1 ACKNOWLEDGEMENTS 
-
-This module was written for Revdev L<http://www.revdev.at>, a nice litte
-software company I run with Koki and Domm (L<http://search.cpan.org/~domm/>).
+    
+    L<http://www.k-1.com>
 
 =head1 COPYRIGHT
 
-DateTime::Event::Zodiac is Copyright (c) 2008 Maroš Kollár
-- L<http://www.revdev.at>
+DateTime::Event::Zodiac is Copyright (c) 2008-13 Maroš Kollár
+- L<http://www.k-1.com>
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

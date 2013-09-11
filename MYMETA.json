@@ -1,10 +1,10 @@
 {
    "abstract" : "Return zodiac for a given date",
    "author" : [
-      "Maroš Kollár"
+      "MaroÅ¡ KollÃ¡r"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Install version 1.04, CPAN::Meta::Converter version 2.113640",
+   "generated_by" : "ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -15,37 +15,31 @@
    "name" : "DateTime-Event-Zodiac",
    "no_index" : {
       "directory" : [
-         "inc",
          "t",
-         "xt"
+         "inc"
       ]
    },
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.62",
-            "Test::More" : 0
+            "ExtUtils::MakeMaker" : "6.59",
+            "Test::More" : "0"
          }
       },
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.62"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "runtime" : {
          "requires" : {
-            "DateTime" : 0,
-            "DateTime::Util::Astro" : 0,
-            "Exporter" : 0,
+            "DateTime" : "0",
+            "DateTime::Astro" : "0",
+            "Exporter" : "0",
             "perl" : "5.006"
          }
       }
    },
    "release_status" : "stable",
-   "resources" : {
-      "license" : [
-         "http://dev.perl.org/licenses/"
-      ]
-   },
-   "version" : "1.02"
+   "version" : "1.03"
 }
